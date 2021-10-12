@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import App from './App.vue';
+import tppApp from './tppApp.vue';
 import router from './router';
 import store from './store'
 
@@ -11,7 +11,7 @@ const VueToastConfig = {
     queue: true
 }
 
-createApp(App)
+createApp(tppApp)
 .use(store)
 .use(VueToast, VueToastConfig)
 .use(router)
