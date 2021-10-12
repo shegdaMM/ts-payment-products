@@ -1,18 +1,39 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    {{name}}
+    <button @click="changeName">
+      edit Name
+    </button>
+
+    {{$store.getters.productList}}<br>
+     {{$store.getters.productCount}}<br>
+     {{$store.getters.notify}}<br>
+     {{$store.getters.productCurrent}}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 export default defineComponent({
   name: 'Home',
-  components: {
-    HelloWorld,
+  data () {
+    return {
+      name: '' as string,
+      count: 0 as number
+    };
   },
+  components: {
+  },
+  methods: {
+    changeName () {
+      this.count = this.count + 1;
+      this.name = `number =  ${this.count}`;
+    }
+  },
+  mounted () {
+    this.$store.dispatch('getProductList');
+    this.$store.dispatch('getProductCurrent', 'tshirts0001');
+  }
 });
 </script>
