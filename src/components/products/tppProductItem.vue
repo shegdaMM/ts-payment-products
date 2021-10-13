@@ -98,7 +98,7 @@ export default defineComponent({
     payFromStripeForm (): void {
       this.stripe.redirectToCheckout({
         successUrl: "http://localhost:8080/success",
-        cancelUrl: "http://localhost:8080/error",
+        cancelUrl: "http://localhost:8080/products",
         lineItems: [
           {
             price: this.productCurrent?.price_id,
