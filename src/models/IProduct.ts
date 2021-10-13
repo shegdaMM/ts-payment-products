@@ -4,5 +4,6 @@ export default interface Product {
     price: string,
     company?: string,
     avatar?: string,
-    details?: string
+    details?: string,
+    price_id?: string
 }

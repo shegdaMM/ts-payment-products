@@ -20,7 +20,10 @@ export default createStore({
     productCount: 0 as number,
 
     // notify
-    notify: null as INotify | null
+    notify: null as INotify | null,
+
+    // loader
+    loadProcess: false as boolean
   },
   getters: {
     productList (state): Array<IProduct> | null {
@@ -36,7 +39,13 @@ export default createStore({
     // notify
     notify (state): INotify | null {
       return state.notify;
-    }
+    },
+
+    // loader
+    loadProcess (state): boolean {
+      return state.loadProcess;
+    },
+
   },
   mutations: {
     setProductList (state, productList: Array<IProduct> | null): void {
@@ -52,6 +61,15 @@ export default createStore({
     // notify
     setNotify (state, payload: INotify | null) {
       state.notify = payload
+    },
+
+    // loader
+    setloadProcess (state, loadStatus: boolean) {
+      if (loadStatus === true || false) {
+        state.loadProcess = loadStatus;
+      } else {
+        state.loadProcess = !state.loadProcess
+      }
     }
   },
   actions: {
