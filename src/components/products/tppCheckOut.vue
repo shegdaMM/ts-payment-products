@@ -188,30 +188,12 @@ export default defineComponent({
     async handleSubmit(event) {
       if (this.loading) return;
       this.loading = true;
-      const { name, email, address, city, state, zip } = Object.fromEntries(
-        new FormData(event.target)
-      );
-
-      const billingDetails = {
-        name,
-        email,
-        address: {
-          city,
-          line1: address,
-          state,
-          postal_code: zip
-        }
-      };
-
+      const billingDetails = this.getUserDataFromForm(event);
       const cardElement = this.elements.getElement("card");
-
       try {
-        const response: any = (await axios.post(paymentServerByID(this.productCurrent?._id))).data;
-        const secret = response.client_secret;
+        const secret = this.getPaymentUserIdInStripe();
 
-        console.log(secret);
-
-       const paymentMethodReq = await this.stripe.createPaymentMethod({
+        const paymentMethodReq = await this.stripe.createPaymentMethod({
           type: "card",
           card: cardElement,
           billing_details: billingDetails
@@ -228,7 +210,29 @@ export default defineComponent({
       } finally {
         this.loading = false;
       }
-    }
+    },
+     getUserDataFromForm (event: any): any{
+       const { name, email, address, city, state, zip } = Object.fromEntries(
+        new FormData(event.target)
+      );
+
+      const billingDetails = {
+        name,
+        email,
+        address: {
+          city,
+          line1: address,
+          state,
+          postal_code: zip
+        }
+      };
+      return billingDetails;
+    },
+    async getPaymentUserIdInStripe (): Promise<string> {
+        const response: any = (await axios.post(paymentServerByID(this.productCurrent?._id))).data;
+        return response.client_secret;
+    },
+
   },
   async created () {
    await this.getProductCurrent(this.id);
