@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import tppApp from './tppApp.vue';
 import router from './router';
 import store from './store';
+import loadingState from './mixins/loadingState'; //global mixin
 
 import '@/assets/main.scss';
 
@@ -23,4 +24,5 @@ createApp(tppApp)
 .use(store)
 .use(VueToast, VueToastConfig)
 .use(router)
+.mixin(loadingState) // add global mixin
 .mount('#app');
