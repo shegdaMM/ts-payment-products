@@ -65,11 +65,7 @@ export default createStore({
 
     // loader
     setloadProcess (state, loadStatus: boolean) {
-      if (loadStatus === true || false) {
         state.loadProcess = loadStatus;
-      } else {
-        state.loadProcess = !state.loadProcess
-      }
     }
   },
   actions: {

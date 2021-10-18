@@ -8,11 +8,12 @@
 import { defineComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex';
 import TppProductItem from '@/components/products/tppProductItem.vue';
-
+import loadingState from '@/mixins/loadingState';
 
 
 export default defineComponent({
   name: 'ProductById',
+  mixins: [loadingState],
   components: {
     TppProductItem
   },
@@ -23,7 +24,11 @@ export default defineComponent({
     ...mapActions(['getProductCurrent'])
   },
   async created () {
-   await this.getProductCurrent();
+    this.onLoaderStatus();
+    await this.getProductCurrent();
+  },
+  mounted () {
+     this.offLoaderStatus();
   }
 });
 </script>

@@ -191,7 +191,7 @@ export default defineComponent({
       const billingDetails = this.getUserDataFromForm(event);
       const cardElement = this.elements.getElement("card");
       try {
-        const secret = this.getPaymentUserIdInStripe();
+        const secret = await this.getPaymentUserIdInStripe();
 
         const paymentMethodReq = await this.stripe.createPaymentMethod({
           type: "card",

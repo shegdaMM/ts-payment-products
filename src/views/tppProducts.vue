@@ -6,9 +6,11 @@
 import { defineComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex';
 import tppProductsList from '@/components/products/tppProductsList.vue';
+import loadingState from '@/mixins/loadingState';
 
 export default defineComponent({
   name: 'Products',
+  mixins: [loadingState],
   components: {
     tppProductsList
   },
@@ -19,7 +21,11 @@ export default defineComponent({
     ...mapActions(['getProductList'])
   },
   async created () {
-   await this.getProductList();
+    this.onLoaderStatus();
+    await this.getProductList();
+  },
+  mounted () {
+     this.offLoaderStatus();
   }
 });
 </script>
